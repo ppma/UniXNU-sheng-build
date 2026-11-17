@@ -58,12 +58,10 @@ jobs:
           ref: 429d337ca53c8f88759710c4daf35bd6ff502f5f # 2026-11-17: includes macos-27.3-26C5035r profile
           path: UniXNU
           submodules: recursive
-      # 2026-11-18: uefi-sheng 已镜像到 Gitee，HEAD 与上游一致 (b303410c...)
-      - uses: actions/checkout@v4
-        with:
-          repository: https://gitee.com/ppma/uefi-sheng.git
-          path: uefi-sheng
-          submodules: recursive
+      # 2026-11-18: actions/checkout 的 repository 只接受 {owner}/{repo}，不支持完整 URL。
+      # uefi-sheng 用 git clone 直接拉 Gitee 镜像（含子模块）。
+      - name: checkout uefi-sheng from Gitee
+        run: git clone --recurse-submodules https://gitee.com/ppma/uefi-sheng.git uefi-sheng
 
       - name: tools
         run: |
